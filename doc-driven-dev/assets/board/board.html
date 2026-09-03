@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>docdev 文档看板</title>
+<link rel="stylesheet" href="/assets/katex.min.css">
+<script src="/assets/cytoscape.min.js"></script>
+<script src="/assets/marked.min.js"></script>
+<script src="/assets/purify.min.js"></script>
+<script src="/assets/katex.min.js"></script>
+<script src="/assets/katex-auto-render.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+     color:#1f2328;background:#f6f8fa;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;align-items:center;gap:12px;padding:9px 14px;background:#24292f;color:#fff;flex:none}
+header h1{font-size:15px;margin:0;font-weight:600}
+header .meta{font-size:12px;color:#a8b1bb}
+header .grow{flex:1}
+button{font:inherit;border:1px solid #d0d7de;background:#f6f8fa;border-radius:6px;padding:5px 11px;cursor:pointer}
+button:hover{background:#eaeef2}
+button.primary{background:#1f883d;border-color:#1f883d;color:#fff}
+button.primary:hover{background:#1a7f37}
+button.danger{background:#cf222e;border-color:#cf222e;color:#fff}
+button.danger:hover{background:#a40e26}
+button:disabled{opacity:.5;cursor:not-allowed}
+main{flex:1;display:flex;min-height:0}
+#side{width:264px;flex:none;background:#fff;border-right:1px solid #d0d7de;display:flex;flex-direction:column;min-height:0}
+#side .pad{padding:9px 11px;border-bottom:1px solid #eaeef2}
+#q{width:100%;padding:6px 9px;border:1px solid #d0d7de;border-radius:6px;font:inherit}
+#types{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+#types label{font-size:12px;display:flex;align-items:center;gap:4px;padding:2px 7px;border:1px solid #d0d7de;
+             border-radius:11px;cursor:pointer;user-select:none}
+#list{overflow:auto;flex:1;min-height:0}
+#list .it{padding:7px 11px;border-bottom:1px solid #f2f4f6;cursor:pointer;font-size:13px}
+#list .it:hover{background:#f6f8fa}
+#list .it.on{background:#ddf4ff}
+#list .it .t{font-weight:500;word-break:break-word}
+#list .it .s{font-size:11px;color:#656d76;margin-top:2px}
+#graph{flex:1;min-width:0;background:#fff;position:relative}
+#cy{position:absolute;inset:0}
+#gtools{position:absolute;top:9px;left:9px;z-index:5;display:flex;gap:6px;flex-wrap:wrap}
+#gtools button{font-size:12px;padding:3px 8px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+#legend{position:absolute;bottom:9px;left:9px;z-index:5;background:rgba(255,255,255,.94);border:1px solid #d0d7de;
+        border-radius:6px;padding:7px 9px;font-size:11px;display:flex;gap:11px;flex-wrap:wrap;max-width:calc(100% - 20px)}
+#legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+#panel{width:480px;flex:none;background:#fff;border-left:1px solid #d0d7de;display:flex;flex-direction:column;min-height:0}
+#phead{padding:10px 13px;border-bottom:1px solid #d0d7de;flex:none}
+#phead h2{margin:0 0 5px;font-size:15px;word-break:break-word}
+#phead .m{font-size:11px;color:#656d76;word-break:break-all}
+#pacts{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+#pbody{flex:1;overflow:auto;padding:13px;min-height:0;overflow-wrap:break-word;word-break:break-word}
+#pbody h1,#pbody h2,#pbody h3{border-bottom:1px solid #eaeef2;padding-bottom:4px;margin:17px 0 9px;line-height:1.3}
+#pbody h1{font-size:19px}#pbody h2{font-size:16px}#pbody h3{font-size:14px}
+#pbody table{border-collapse:collapse;width:100%;margin:9px 0;font-size:13px;display:block;overflow-x:auto;max-width:100%}
+#pbody th,#pbody td{border:1px solid #d0d7de;padding:5px 9px;text-align:left}
+#pbody th{background:#f6f8fa}
+#pbody pre{background:#f6f8fa;padding:11px;border-radius:6px;overflow:auto;max-width:100%;white-space:pre-wrap;word-break:break-word}
+#pbody code{background:rgba(175,184,193,.2);padding:.2em .4em;border-radius:4px;font-size:85%}
+#pbody pre code{background:none;padding:0}
+#pbody blockquote{border-left:3px solid #d0d7de;margin:9px 0;padding:0 13px;color:#656d76}
+#pbody img{max-width:100%}
+#pbody a{color:#0969da}
+.refs{margin-top:15px;padding-top:11px;border-top:1px solid #eaeef2;font-size:12px}
+.refs .g{margin-bottom:7px}
+.refs .k{color:#656d76;margin-right:5px}
+.chip{display:inline-block;background:#ddf4ff;border:1px solid #b6e3ff;border-radius:11px;padding:1px 8px;
+      margin:2px 3px 2px 0;cursor:pointer;font-size:11px}
+.chip:hover{background:#b6e3ff}
+#editor{display:none;flex-direction:column;flex:1;min-height:0;padding:11px 13px;gap:8px}
+#editor.on{display:flex}
+#pview{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+#pview.off{display:none}
+#etitle{padding:6px 9px;border:1px solid #d0d7de;border-radius:6px;font:inherit;width:100%}
+#etext{flex:1;min-height:0;padding:9px;border:1px solid #d0d7de;border-radius:6px;resize:none;
+       font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;width:100%}
+#ehint{font-size:11px;color:#656d76}
+#toast{position:fixed;bottom:19px;left:50%;transform:translateX(-50%);background:#24292f;color:#fff;
+       padding:9px 17px;border-radius:6px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;max-width:80vw}
+#toast.on{opacity:1}
+#toast.bad{background:#cf222e}
+#mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:40}
+#mask.on{display:flex}
+#modal{background:#fff;border-radius:8px;padding:19px;width:min(560px,92vw);max-height:86vh;overflow:auto}
+#modal h3{margin:0 0 11px;font-size:16px}
+#modal .row{margin-bottom:11px}
+#modal label{display:block;font-size:12px;color:#656d76;margin-bottom:4px}
+#modal select,#modal input,#modal textarea{width:100%;padding:6px 9px;border:1px solid #d0d7de;border-radius:6px;font:inherit}
+#modal textarea{min-height:180px;resize:vertical;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}
+#modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:15px}
+#impact{background:#fff8c5;border:1px solid #d4a72c;border-radius:6px;padding:11px;font-size:13px;margin-bottom:11px}
+#impact ul{margin:7px 0 0;padding-left:19px}
+#impact li{word-break:break-all;margin-bottom:2px}
+.empty{color:#656d76;padding:26px 13px;text-align:center;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>docdev 文档看板</h1>
+  <span class="meta" id="hmeta">加载中…</span>
+  <span class="grow"></span>
+  <button id="bnew">＋ 新建文档</button>
+  <button id="barchive">归档到期文档</button>
+  <button id="bboard">重建 board.md</button>
+  <button id="brefresh">刷新</button>
+</header>
+<main>
+  <div id="side">
+    <div class="pad">
+      <input id="q" placeholder="搜索标题 / ID…">
+      <div id="types"></div>
+    </div>
+    <div id="list"></div>
+  </div>
+  <div id="graph">
+    <div id="gtools">
+      <button id="gfit">适应</button>
+      <button id="grelayout">重排</button>
+      <button id="gfocus">聚焦邻居</button>
+      <button id="gall">显示全部</button>
+      <button id="garch">显示归档</button>
+      <button id="glayout">布局调节</button>
+    </div>
+    <div id="gpanel" style="display:none;position:absolute;top:44px;left:9px;z-index:6;background:rgba(255,255,255,.97);border:1px solid #d0d7de;border-radius:6px;padding:10px 12px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.12)">
+      <div style="font-weight:600;margin-bottom:7px">图谱布局</div>
+      <label style="display:block;margin-bottom:5px">斥力 <input id="lrep" type="range" min="5000" max="100000" step="1000" value="40000" style="width:130px;vertical-align:middle"> <span id="lrepv">40000</span></label>
+      <label style="display:block;margin-bottom:5px">边长 <input id="ledge" type="range" min="40" max="300" step="5" value="140" style="width:130px;vertical-align:middle"> <span id="ledgev">140</span></label>
+      <label style="display:block;margin-bottom:5px">重力 <input id="lgrav" type="range" min="0" max="100" step="1" value="8" style="width:130px;vertical-align:middle"> <span id="lgravv">0.08</span></label>
+      <button id="lapply" style="margin-top:4px;font-size:12px;padding:3px 10px">应用重排</button>
+    </div>
+    <div id="cy"></div>
+    <div id="legend"></div>
+  </div>
+  <div id="panel">
+    <div id="phead">
+      <h2 id="ptitle">未选择文档</h2>
+      <div class="m" id="pmeta">点击左侧列表或图中节点查看文档</div>
+      <div id="pacts"></div>
+    </div>
+    <div id="pview"><div id="pbody"><div class="empty">选择一个文档以查看正文</div></div></div>
+    <div id="editor">
+      <input id="etitle" placeholder="标题（留空则由正文首行推断）">
+      <textarea id="etext" spellcheck="false"></textarea>
+      <div id="ehint">支持 Markdown 与 LaTeX（$...$ 行内，$$...$$ 独立）。交叉引用写 [[文档 ID]] 或 [[文档 ID|显示名]]。</div>
+      <div style="display:flex;gap:8px">
+        <button class="primary" id="esave">保存</button>
+        <button id="ecancel">取消</button>
+      </div>
+    </div>
+  </div>
+</main>
+<div id="toast"></div>
+<div id="mask"><div id="modal"></div></div>
+
+<script>
+const TYPES = {
+  index:    {label:"脉搏",    color:"#8250df"},
+  idea:     {label:"想法",    color:"#0969da"},
+  landing:  {label:"Landing", color:"#1f883d"},
+  exp:      {label:"实验",    color:"#bf8700"},
+  decision: {label:"决策",    color:"#cf222e"},
+  lesson:   {label:"经验",    color:"#57606a"},
+};
+const $ = s => document.querySelector(s);
+let DATA = {nodes:[], edges:[], counts:{}}, cy = null, current = null, hidden = new Set(), focused = false, showArch = false;
+
+marked.setOptions({gfm:true, breaks:true});
+
+function toast(msg, bad){
+  const t = $("#toast");
+  t.textContent = msg;
+  t.className = "on" + (bad ? " bad" : "");
+  clearTimeout(t._h);
+  t._h = setTimeout(() => { t.className = ""; }, bad ? 5200 : 2600);
+}
+
+async function api(path, opts){
+  // 用相对路径：经 VSCode/SSH 端口转发时，绝对路径可能被转发层改写或拦截
+  const url = path.replace(/^\//, "");
+  let res;
+  try { res = await fetch(url, opts); }
+  catch(e){ throw new Error("请求 " + url + " 失败：" + e.message + "（端口转发可能未放行该路径）"); }
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); }
+  catch {
+    const head = text.trim().slice(0, 120).replace(/\s+/g, " ");
+    throw new Error("请求 " + url + " 收到非 JSON 响应 (HTTP " + res.status + ")：" + head);
+  }
+  if(!res.ok || data.ok === false){
+    let msg = data.error || ("HTTP " + res.status);
+    if(data.issues) msg += "：" + data.issues.slice(0,3).join("；");
+    const err = new Error(msg); err.data = data; throw err;
+  }
+  return data;
+}
+
+/* ---------- Markdown + LaTeX 渲染 ---------- */
+// 先把公式挖出来占位，避免 markdown 解析破坏 LaTeX（如 _ 变斜体、\\ 被吃掉）
+const PH = "\uE000", PHE = "\uE001";
+function renderMarkdown(text){
+  const math = [];
+  let src = String(text || "").replace(/\r\n/g, "\n").replace(/[\uE000\uE001]/g, "");
+  src = src.replace(/```[\s\S]*?```|`[^`\n]*`/g, m => {           // 保护代码块
+    math.push({code:true, raw:m});
+    return PH + (math.length - 1) + PHE;
+  });
+  src = src.replace(/\$\$([\s\S]+?)\$\$|\$([^\$\n]+?)\$/g, (m, d, i) => {
+    math.push({display: d !== undefined, tex: d !== undefined ? d : i});
+    return PH + (math.length - 1) + PHE;
+  });
+  let html = marked.parse(src);
+  html = html.replace(new RegExp(PH + "(\\d+)" + PHE, "g"), (_, n) => {
+    const item = math[+n];
+    if(item.code) return marked.parseInline(item.raw);
+    try {
+      return katex.renderToString(item.tex, {displayMode:item.display, throwOnError:false});
+    } catch(e){
+      return '<code>' + item.tex.replace(/</g,"&lt;") + '</code>';
+    }
+  });
+  if(typeof DOMPurify === "undefined" || !DOMPurify.sanitize) return html;
+  return DOMPurify.sanitize(html, {ADD_TAGS:["math","semantics","annotation","mrow","mi","mn","mo","msup","msub","mfrac","msqrt","mstyle","mspace","mtable","mtr","mtd","munderover","munder","mover","mtext"], ADD_ATTR:["xmlns","display","encoding","stretchy","mathvariant","aria-hidden","style"]});
+}
+
+/* ---------- 图谱 ---------- */
+function buildGraph(){
+  const visible = DATA.nodes.filter(n => !hidden.has(n.type) && (showArch || !n.archived));
+  const ids = new Set(visible.map(n => n.id));
+  const elements = [
+    ...visible.map(n => ({data:{id:n.id, label:n.title.length > 22 ? n.title.slice(0,21) + "…" : n.title,
+                                type:n.type, deg:n.degree}, classes: n.archived ? "arch" : ""})),
+    ...DATA.edges.filter(e => ids.has(e.source) && ids.has(e.target))
+                 .map(e => ({data:{id:e.source + "->" + e.target, source:e.source, target:e.target}})),
+  ];
+  if(cy) cy.destroy();
+  cy = cytoscape({
+    container: $("#cy"),
+    elements,
+    wheelSensitivity: 0.25,
+    style: [
+      {selector:"node", style:{
+        "label":"data(label)", "font-size":9, "color":"#1f2328",
+        "text-valign":"bottom", "text-margin-y":3, "text-wrap":"wrap", "text-max-width":94,
+        "width":"mapData(deg, 0, 12, 15, 44)", "height":"mapData(deg, 0, 12, 15, 44)",
+        "background-color": ele => TYPES[ele.data("type")] ? TYPES[ele.data("type")].color : "#57606a",
+        "border-width":1.5, "border-color":"#fff",
+      }},
+      {selector:"edge", style:{
+        "width":1, "line-color":"#c8d1da", "target-arrow-color":"#c8d1da",
+        "target-arrow-shape":"triangle", "arrow-scale":.65, "curve-style":"bezier",
+        "opacity":.62,
+      }},
+      {selector:"node.arch", style:{"border-style":"dashed","border-color":"#8c959f","border-width":2,"opacity":.55}},
+      {selector:"node.sel", style:{"border-width":3, "border-color":"#0969da", "z-index":99}},
+      {selector:"node.dim", style:{"opacity":.13}},
+      {selector:"edge.dim", style:{"opacity":.04}},
+      {selector:"edge.hi", style:{"line-color":"#0969da","target-arrow-color":"#0969da","opacity":1,"width":2,"z-index":98}},
+    ],
+    layout: layoutOpts(elements.length),
+  });
+  cy.on("tap", "node", evt => select(evt.target.id()));
+  cy.on("tap", evt => { if(evt.target === cy) clearFocus(); });
+}
+
+let LAYOUT = {nodeRepulsion: 40000, idealEdgeLength: 140, gravity: 0.08};
+function layoutOpts(n){
+  return {name:"cose", animate:false, nodeRepulsion: LAYOUT.nodeRepulsion,
+          idealEdgeLength: LAYOUT.idealEdgeLength, gravity: LAYOUT.gravity,
+          numIter: n > 160 ? 800 : 1400, randomize:true, fit:true, padding:48};
+}
+
+function highlight(id){
+  if(!cy) return;
+  cy.elements().removeClass("sel dim hi");
+  const node = cy.getElementById(id);
+  if(!node || !node.length) return;
+  node.addClass("sel");
+  if(focused){
+    const keep = node.closedNeighborhood();
+    cy.elements().difference(keep).addClass("dim");
+    keep.edges().addClass("hi");
+  } else {
+    node.connectedEdges().addClass("hi");
+  }
+}
+
+function clearFocus(){ if(cy) cy.elements().removeClass("dim"); }
+
+/* ---------- 左侧列表 ---------- */
+function renderTypes(){
+  $("#types").innerHTML = Object.entries(TYPES).map(([k,v]) =>
+    `<label style="border-color:${v.color}44"><input type="checkbox" data-t="${k}" ${hidden.has(k)?"":"checked"}>
+     <span style="color:${v.color}">${v.label}</span> ${DATA.counts[k]||0}</label>`).join("");
+  $("#types").querySelectorAll("input").forEach(cb => cb.onchange = () => {
+    cb.checked ? hidden.delete(cb.dataset.t) : hidden.add(cb.dataset.t);
+    renderList(); buildGraph(); if(current) highlight(current);
+  });
+  $("#legend").innerHTML = Object.entries(TYPES).map(([k,v]) =>
+    `<span><i style="background:${v.color}"></i>${v.label}</span>`).join("");
+}
+
+function renderList(){
+  const q = $("#q").value.trim().toLowerCase();
+  const items = DATA.nodes
+    .filter(n => !hidden.has(n.type) && (showArch || !n.archived))
+    .filter(n => !q || n.title.toLowerCase().includes(q) || n.id.toLowerCase().includes(q))
+    .sort((a,b) => b.updated_at.localeCompare(a.updated_at));
+  const na = DATA.nodes.filter(n => n.archived).length;
+  $("#hmeta").textContent = `${DATA.project.name} · ${DATA.nodes.length} 篇（归档 ${na}）· ${DATA.edges.length} 条引用`;
+  if(!items.length){ $("#list").innerHTML = '<div class="empty">没有匹配的文档</div>'; return; }
+  $("#list").innerHTML = items.map(n => `
+    <div class="it ${n.id===current?"on":""}" data-id="${encodeURIComponent(n.id)}">
+      <div class="t" style="color:${TYPES[n.type].color}">${esc(n.title)}</div>
+      <div class="s">${TYPES[n.type].label} · ${n.updated_at} · 引用 ${n.refs.length}/被引 ${n.referenced_by.length}${n.archived ? " · 已归档" : ""}</div>
+    </div>`).join("");
+  $("#list").querySelectorAll(".it").forEach(el =>
+    el.onclick = () => select(decodeURIComponent(el.dataset.id)));
+}
+
+function esc(s){ const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+/* ---------- 右侧详情 ---------- */
+async function select(id){
+  current = id;
+  renderList();
+  highlight(id);
+  try {
+    const doc = await api("/api/doc?id=" + encodeURIComponent(id));
+    showDoc(doc);
+    // 在看板里读过也算读过，避免正在查看的文档被自动归档
+    fetch("/api/touch", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({id})}).catch(() => {});
+  } catch(e){ toast(e.message, true); }
+}
+
+function showDoc(doc){
+  $("#editor").classList.remove("on");
+  $("#pview").classList.remove("off");
+  $("#ptitle").textContent = doc.title;
+  const bits = [TYPES[doc.type].label, doc.id, "创建 " + doc.created_at, "更新 " + doc.updated_at];
+  if(doc.last_read) bits.push("最后读取 " + doc.last_read);
+  if(doc.archived) bits.push("已归档");
+  if(doc.revision) bits.push("r" + doc.revision);
+  $("#pmeta").textContent = bits.join(" · ");
+  const acts = [];
+  if(doc.editable) acts.push('<button id="aedit">编辑</button>');
+  if(doc.type === "exp") acts.push('<button id="aappend">追加日志</button>');
+  if(doc.archived) acts.push('<button id="aunarch">恢复到活跃区</button>');
+  if(doc.removable) acts.push('<button class="danger" id="adel">删除</button>');
+  $("#pacts").innerHTML = acts.join("");
+  if($("#aedit")) $("#aedit").onclick = () => openEditor(doc);
+  if($("#aappend")) $("#aappend").onclick = () => openAppend(doc);
+  if($("#adel")) $("#adel").onclick = () => openDelete(doc);
+  if($("#aunarch")) $("#aunarch").onclick = async () => {
+    try {
+      await api("/api/unarchive", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({id:doc.id})});
+      toast("已恢复到活跃区");
+      await reload(); await select(doc.id);
+    } catch(e){ toast(e.message, true); }
+  };
+
+  let html = renderMarkdown(doc.content || "*（暂无正文）*");
+  if(doc.logs && doc.logs.length){
+    html += '<h2>实验日志</h2>' + doc.logs.map(l =>
+      `<h3>${esc(l.created_at)} — ${esc(l.title || "记录")}</h3>` + renderMarkdown(l.content)).join("");
+  }
+  const chips = g => g.map(r =>
+    `<span class="chip" data-id="${encodeURIComponent(r.id)}">${esc(r.title)}</span>`).join("") || '<span class="k">无</span>';
+  html += `<div class="refs">
+      <div class="g"><span class="k">引用 →</span>${chips(doc.refs)}</div>
+      <div class="g"><span class="k">← 被引用</span>${chips(doc.referenced_by)}</div>
+      <div class="g"><span class="k">文件</span>${esc(doc.path)}</div>
+    </div>`;
+  $("#pbody").innerHTML = html;
+  $("#pbody").querySelectorAll(".chip").forEach(c =>
+    c.onclick = () => select(decodeURIComponent(c.dataset.id)));
+}
+
+/* ---------- 编辑 / 新建 / 追加 / 删除 ---------- */
+function openEditor(doc){
+  $("#pview").classList.add("off");
+  $("#editor").classList.add("on");
+  $("#etitle").value = doc.title;
+  $("#etext").value = doc.content;
+  $("#esave").onclick = async () => {
+    $("#esave").disabled = true;
+    try {
+      await api("/api/save", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({id:doc.id, title:$("#etitle").value, content:$("#etext").value})});
+      toast("已保存");
+      await reload();
+      await select(doc.id);
+    } catch(e){ toast(e.message, true); }
+    finally { $("#esave").disabled = false; }
+  };
+  $("#ecancel").onclick = () => select(doc.id);
+}
+
+function modal(html){
+  $("#modal").innerHTML = html;
+  $("#mask").classList.add("on");
+  $("#mask").onclick = e => { if(e.target === $("#mask")) closeModal(); };
+}
+function closeModal(){ $("#mask").classList.remove("on"); $("#modal").innerHTML = ""; }
+
+function openNew(){
+  modal(`<h3>新建文档</h3>
+    <div class="row"><label>类型</label><select id="ntype">
+      ${["idea","exp","decision","lesson"].map(t => `<option value="${t}">${TYPES[t].label}（${t}）</option>`).join("")}
+    </select></div>
+    <div class="row"><label>标题（可留空，由正文首行推断）</label><input id="ntitle"></div>
+    <div class="row"><label>正文 — 支持 Markdown / LaTeX / [[交叉引用]]</label><textarea id="ncontent"></textarea></div>
+    <div class="acts"><button id="ncancel">取消</button><button class="primary" id="nok">创建</button></div>`);
+  $("#ncancel").onclick = closeModal;
+  $("#nok").onclick = async () => {
+    $("#nok").disabled = true;
+    try {
+      const r = await api("/api/create", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({type:$("#ntype").value, title:$("#ntitle").value, content:$("#ncontent").value})});
+      closeModal(); toast("已创建 " + r.id);
+      await reload(); await select(r.id);
+    } catch(e){ toast(e.message, true); $("#nok").disabled = false; }
+  };
+}
+
+function openAppend(doc){
+  modal(`<h3>追加实验日志 — ${esc(doc.title)}</h3>
+    <div class="row"><label>小标题（可留空）</label><input id="atitle"></div>
+    <div class="row"><label>日志正文</label><textarea id="acontent"></textarea></div>
+    <div class="acts"><button id="acancel">取消</button><button class="primary" id="aok">追加</button></div>`);
+  $("#acancel").onclick = closeModal;
+  $("#aok").onclick = async () => {
+    $("#aok").disabled = true;
+    try {
+      await api("/api/append", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({id:doc.id, title:$("#atitle").value, content:$("#acontent").value})});
+      closeModal(); toast("已追加日志");
+      await reload(); await select(doc.id);
+    } catch(e){ toast(e.message, true); $("#aok").disabled = false; }
+  };
+}
+
+// 删除：先请求 dry-run 拿到影响面，展示后才允许强删
+async function openDelete(doc){
+  let impact;
+  try {
+    impact = await api("/api/remove", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({id:doc.id, dry_run:true})});
+  } catch(e){ return toast(e.message, true); }
+  const refs = impact.referenced_by || [];
+  const warn = refs.length
+    ? `<div id="impact"><b>⚠ 该文档被 ${refs.length} 篇文档引用</b>
+         <div style="margin-top:5px">强制删除会把这些文档正文里的 <code>[[引用]]</code> 自动替换为纯文本标题
+         「${esc(doc.title)}」，这会修改它们的正文：</div>
+         <ul>${refs.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>`
+    : `<div id="impact">该文档没有被任何文档引用，删除不会影响其他文档。</div>`;
+  modal(`<h3>删除文档</h3>
+    <div class="row"><b>${esc(doc.title)}</b><div class="m" style="font-size:12px;color:#656d76">${esc(doc.id)} · ${esc(doc.path)}</div></div>
+    ${warn}
+    <div class="row" style="font-size:13px">删除后无法撤销（docs/ 不在版本控制内）。确认请在下方输入 <code>DELETE</code>。</div>
+    <div class="row"><input id="dconfirm" placeholder="输入 DELETE 确认" autocomplete="off"></div>
+    <div class="acts"><button id="dcancel">取消</button><button class="danger" id="dok" disabled>确认删除</button></div>`);
+  $("#dcancel").onclick = closeModal;
+  $("#dconfirm").oninput = e => { $("#dok").disabled = e.target.value.trim() !== "DELETE"; };
+  $("#dok").onclick = async () => {
+    $("#dok").disabled = true;
+    try {
+      const r = await api("/api/remove", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({id:doc.id, dry_run:false, force:true})});
+      closeModal();
+      toast("已删除" + (r.rewritten && r.rewritten.length ? `，并清理了 ${r.rewritten.length} 处引用` : ""));
+      current = null;
+      await reload();
+      $("#ptitle").textContent = "未选择文档";
+      $("#pmeta").textContent = "文档已删除";
+      $("#pacts").innerHTML = "";
+      $("#pbody").innerHTML = '<div class="empty">文档已删除</div>';
+    } catch(e){ toast(e.message, true); $("#dok").disabled = false; }
+  };
+}
+
+/* ---------- 载入 ---------- */
+async function reload(){
+  DATA = await api("/api/graph");
+  renderTypes(); renderList(); buildGraph();
+  if(current) highlight(current);
+}
+
+$("#q").oninput = renderList;
+$("#brefresh").onclick = async () => { try { await reload(); toast("已刷新"); } catch(e){ toast(e.message, true); } };
+$("#bnew").onclick = openNew;
+$("#bboard").onclick = async () => {
+  try {
+    const r = await api("/api/board", {method:"POST"});
+    toast(`board.md 已重建：${r.documents} 篇 / ${r.edges} 条引用`);
+  } catch(e){ toast(e.message, true); }
+};
+$("#gfit").onclick = () => cy && cy.fit(undefined, 34);
+$("#grelayout").onclick = () => cy && cy.layout(layoutOpts(cy.elements().length)).run();
+$("#glayout").onclick = () => { const g = $("#gpanel"); g.style.display = g.style.display === "none" ? "block" : "none"; };
+const syncL = () => {
+  $("#lrepv").textContent = $("#lrep").value;
+  $("#ledgev").textContent = $("#ledge").value;
+  $("#lgravv").textContent = ($("#lgrav").value / 100).toFixed(2);
+};
+$("#lrep").oninput = syncL; $("#ledge").oninput = syncL; $("#lgrav").oninput = syncL;
+$("#lapply").onclick = () => {
+  LAYOUT.nodeRepulsion = +$("#lrep").value;
+  LAYOUT.idealEdgeLength = +$("#ledge").value;
+  LAYOUT.gravity = +$("#lgrav").value / 100;
+  if(cy) cy.layout(layoutOpts(cy.elements().length)).run();
+  toast("布局已更新");
+};
+$("#gfocus").onclick = () => { focused = !focused; $("#gfocus").textContent = focused ? "取消聚焦" : "聚焦邻居";
+                               if(current) highlight(current); else clearFocus(); };
+$("#gall").onclick = () => { hidden.clear(); focused = false; $("#gfocus").textContent = "聚焦邻居";
+                             renderTypes(); renderList(); buildGraph(); if(current) highlight(current); };
+$("#garch").onclick = () => { showArch = !showArch; $("#garch").textContent = showArch ? "隐藏归档" : "显示归档";
+                              renderList(); buildGraph(); if(current) highlight(current); };
+$("#barchive").onclick = async () => {
+  try {
+    const dry = await api("/api/archive", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({apply:false})});
+    if(!dry.count) return toast("没有到期未读的文档");
+    modal(`<h3>归档到期文档</h3>
+      <div id="impact">以下 ${dry.count} 篇实验/决策/经验超过 5 天未被 <code>docdev read</code> 读取或编辑，
+        将移动到 <code>docs/archive/</code>（引用关系保留，可随时恢复）：
+        <ul>${dry.candidates.map(c => `<li>${esc(c.title)} <span style="color:#656d76">（${c.idle_days} 天未读）</span></li>`).join("")}</ul></div>
+      <div class="acts"><button id="arcancel">取消</button><button class="primary" id="arok">确认归档</button></div>`);
+    $("#arcancel").onclick = closeModal;
+    $("#arok").onclick = async () => {
+      $("#arok").disabled = true;
+      try {
+        const r = await api("/api/archive", {method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({apply:true})});
+        closeModal(); toast(`已归档 ${r.archived.length} 篇`);
+        await reload();
+      } catch(e){ toast(e.message, true); $("#arok").disabled = false; }
+    };
+  } catch(e){ toast(e.message, true); }
+};
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+reload().catch(e => {
+  $("#hmeta").textContent = "加载失败";
+  $("#list").innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+  toast(e.message, true);
+});
+</script>
+</body>
+</html>

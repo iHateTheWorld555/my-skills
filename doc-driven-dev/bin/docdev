@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+SCRIPT=$0
+while [ -L "$SCRIPT" ]; do
+  SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$SCRIPT")" && pwd)
+  TARGET=$(readlink "$SCRIPT")
+  case "$TARGET" in
+    /*) SCRIPT=$TARGET ;;
+    *) SCRIPT=$SCRIPT_DIR/$TARGET ;;
+  esac
+done
+PACK_DIR=$(CDPATH= cd -- "$(dirname -- "$SCRIPT")/.." && pwd)
+exec python3 "$PACK_DIR/scripts/docdev.py" "$@"
