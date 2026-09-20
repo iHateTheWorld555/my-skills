@@ -8,3 +8,4 @@
 | 2 | Lark / 飞书 CLI | https://github.com/larksuite/cli | 官方 Lark CLI，200+ 命令 + 20+ AI Agent Skills（消息、Docs、Base、表格、日历、邮件、任务、会议等） |
 | 3 | Agent-Reach | https://github.com/Panniantong/Agent-Reach | 让 agent 读取/搜索 Twitter、Reddit、YouTube、GitHub、Bilibili、小红书等全网，单 CLI 免 API 费用 |
 | 4 | ppt-master | https://github.com/hugohe3/ppt-master | AI 将文档/主题转为原生 PowerPoint（原生形状、动画、图表表格、旁白音频，支持自定义 .pptx 模板） |
+| 5 | code-review | https://github.com/sgl-project/sglang-omni/blob/main/.claude/skills/code-review/coding-style.md | 代码风格检查 |
