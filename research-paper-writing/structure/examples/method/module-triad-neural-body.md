@@ -5,7 +5,7 @@
 Local source references:
 
 1. Annotated figure showing motivation/design/advantages split.
-3. Text-converted annotation notes: `references/examples/method/neural-body-annotated-figure-text.md`
+3. Text-converted annotation notes: `examples/method/neural-body-annotated-figure-text.md`
 
 Triad mapping template:
 

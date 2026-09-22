@@ -93,7 +93,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/version-1-task-then-application.md`
+1. `examples/introduction/version-1-task-then-application.md`
 
 ### Version 2
 
@@ -111,7 +111,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/version-2-application-first.md`
+1. `examples/introduction/version-2-application-first.md`
 
 ### Version 3
 
@@ -130,7 +130,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/version-3-general-to-specific-setting.md`
+1. `examples/introduction/version-3-general-to-specific-setting.md`
 
 ### Version 4
 
@@ -158,7 +158,7 @@ Expert note:
 
 Local cite:
 
-1. `references/examples/introduction/version-4-open-with-challenge.md`
+1. `examples/introduction/version-4-open-with-challenge.md`
 
 ## Part B: Introduce Technical Challenge for Previous Methods (Very Important)
 
@@ -202,7 +202,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/technical-challenge-version-1-existing-task.md`
+1. `examples/introduction/technical-challenge-version-1-existing-task.md`
 
 ### Technical-Challenge Version 2 (existing task + our insight seen in traditional methods)
 
@@ -225,7 +225,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/technical-challenge-version-2-existing-task-insight-backed-by-traditional.md`
+1. `examples/introduction/technical-challenge-version-2-existing-task-insight-backed-by-traditional.md`
 
 ### Technical-Challenge Version 3 (novel task, no direct methods)
 
@@ -247,7 +247,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/technical-challenge-version-3-novel-task.md`
+1. `examples/introduction/technical-challenge-version-3-novel-task.md`
 
 ## Part C: Introduce Our Pipeline for Solving the Challenge
 
@@ -289,7 +289,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/pipeline-version-1-one-contribution-multi-advantages.md`
+1. `examples/introduction/pipeline-version-1-one-contribution-multi-advantages.md`
 
 ### Pipeline Version 2
 
@@ -315,7 +315,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/pipeline-version-2-two-contributions.md`
+1. `examples/introduction/pipeline-version-2-two-contributions.md`
 
 ### Pipeline Version 3
 
@@ -339,7 +339,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/pipeline-version-3-new-module-on-existing-pipeline.md`
+1. `examples/introduction/pipeline-version-3-new-module-on-existing-pipeline.md`
 
 ### Pipeline Version 4
 
@@ -361,7 +361,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/introduction/pipeline-version-4-observation-driven.md`
+1. `examples/introduction/pipeline-version-4-observation-driven.md`
 
 ### Not Recommended Writing
 
@@ -381,23 +381,23 @@ Why not recommended (writing structure warning):
 
 Local cite:
 
-1. `references/examples/introduction/pipeline-not-recommended-abstract-only.md`
+1. `examples/introduction/pipeline-not-recommended-abstract-only.md`
 
 ## Example Bank
 
-1. `references/examples/introduction-examples.md`
-2. `references/examples/introduction/version-1-task-then-application.md`
-3. `references/examples/introduction/version-2-application-first.md`
-4. `references/examples/introduction/version-3-general-to-specific-setting.md`
-5. `references/examples/introduction/version-4-open-with-challenge.md`
-6. `references/examples/introduction/technical-challenge-version-1-existing-task.md`
-7. `references/examples/introduction/technical-challenge-version-2-existing-task-insight-backed-by-traditional.md`
-8. `references/examples/introduction/technical-challenge-version-3-novel-task.md`
-9. `references/examples/introduction/pipeline-version-1-one-contribution-multi-advantages.md`
-10. `references/examples/introduction/pipeline-version-2-two-contributions.md`
-11. `references/examples/introduction/pipeline-version-3-new-module-on-existing-pipeline.md`
-12. `references/examples/introduction/pipeline-version-4-observation-driven.md`
-13. `references/examples/introduction/pipeline-not-recommended-abstract-only.md`
+1. `examples/introduction-examples.md`
+2. `examples/introduction/version-1-task-then-application.md`
+3. `examples/introduction/version-2-application-first.md`
+4. `examples/introduction/version-3-general-to-specific-setting.md`
+5. `examples/introduction/version-4-open-with-challenge.md`
+6. `examples/introduction/technical-challenge-version-1-existing-task.md`
+7. `examples/introduction/technical-challenge-version-2-existing-task-insight-backed-by-traditional.md`
+8. `examples/introduction/technical-challenge-version-3-novel-task.md`
+9. `examples/introduction/pipeline-version-1-one-contribution-multi-advantages.md`
+10. `examples/introduction/pipeline-version-2-two-contributions.md`
+11. `examples/introduction/pipeline-version-3-new-module-on-existing-pipeline.md`
+12. `examples/introduction/pipeline-version-4-observation-driven.md`
+13. `examples/introduction/pipeline-not-recommended-abstract-only.md`
 
 ## Quick Quality Checklist
 

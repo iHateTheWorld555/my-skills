@@ -18,4 +18,4 @@
 ```
 
 See also:
-1. `references/examples/introduction/novel-task-challenge-decomposition.md`
+1. `examples/introduction/novel-task-challenge-decomposition.md`
