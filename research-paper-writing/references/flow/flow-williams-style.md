@@ -2,13 +2,15 @@
 
 来源：Joseph M. Williams 与 Joseph Bizup《Style: Lessons in Clarity and Grace》（本手册依据第 11 版全文整理，术语与例句框架同源自原书）。用途：给 AI agent 当修改论文流畅度的核对清单，每节给出原则、症状、改法与英文正反例。
 
+在这份手册中，我们会把原书的诊断步骤写成可以直接执行的检查动作。
+
 ---
 
 ## 一、角色作主语，动作作动词
 
 ### 原则
 
-Williams 全书的第一原则只有两条：把句子的主语留给主要角色（character），把谓语留给角色执行的关键动作（action）。学术写作里最常见的病，是把动词变成抽象名词（nominalization），再把角色藏进介词短语或所有格里。
+Williams 全书的第一原则只有两条：把句子的主语留给主要角色（character），把谓语留给角色执行的关键动作（action）。学术写作里最常见的病，是把动词变成抽象名词（nominalization），再把角色藏进介词短语或所有格里。读者读到这种句子，找不到"谁在做"，也找不到"做了什么"。
 
 ### 症状
 
@@ -23,8 +25,8 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ### 改法（三步诊断）
 
-1. **诊断**：忽略句首短语，给每句开头 $7$–$8$ 个词画线。若画线处全是抽象名词、或读了这么多词还没见到谓语，这句有问题。
-2. **找角色与动作**：问两个问题——"谁在做？"（who is doing that?）与"做什么？"（what are they doing?）。角色常藏在所有格（our analysis → we）、介词宾语（the fear of the people → the people fear）、形容词（governmental → government）里。
+1. **诊断**：忽略句首短语，给每句开头 $7$–$8$ 个词画线。画线处全是抽象名词，或读了这么多词还没见到谓语——这句有问题。
+2. **找角色与动作**：问两个问题——"谁在做？"（who is doing that?）与"做什么？"（what are they doing?）。角色常藏在所有格（our analysis → we）、介词宾语（the fear of the people → the people fear）、形容词（governmental → government）里。我们可以把这一步记成一句口诀：先把角色找出来，再把动作还给动词。
 3. **重写**：把名词变回动词，让角色当主语，再用 because / if / when / although / that 把分句串起来：
 
    > The Federalists argued that popular democracy destabilized government, because they believed that factions tended to further their self-interest at the expense of the common good.
@@ -72,7 +74,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ### 症状
 
-- 一句话里 metadiscourse（关于写作的语言）占了大半。原书的例子三十四个词里只有九个词在说正事：
+- 一句话里 metadiscourse（关于写作的语言）占了大半。原书的例子三十四个词里只有九个词在说正事。全文照录：
 
   > The last point I would like to make is that in regard to men-women relationships, it is important to keep in mind that the greatest changes have occurred in how they work together.
 
@@ -92,7 +94,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ### 原则
 
-读者把句子最后几个词读得最重。Williams 称这个位置为 stress position（重音位）：读者靠句尾判断哪句话的信息最重要，写作者就把最重要的信息放到那里。原则是"从简单到复杂"：句首放短的、旧的、熟悉的信息，句尾放长的、新的、复杂的信息。
+读者把句子最后几个词读得最重。Williams 称这个位置为 stress position（重音位）：读者靠句尾判断哪句话的信息最重要，写作者就把最重要的信息放到那里。原则是"从简单到复杂"：句首放短的、旧的、熟悉的信息，句尾放长的、新的、复杂的信息。这一条要求我们写出双重节奏——每个句子的内部先旧后新，整段的话题却始终保持一致。
 
 ### 症状
 
@@ -115,6 +117,8 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
    - it 开头：`That oil prices would be set by OPEC once seemed inevitable.` → `It once seemed inevitable that oil prices would be set by OPEC.`
    - not only X but also Y
    - 句尾用代词或省略，避免重复导致的声音下坠
+
+三个战术动作做完，读者自然会把重音落在你想让他落的词上。
 
 ### 段落层面的一个加码动作
 
@@ -159,7 +163,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 ### 症状
 
 - 读了二十多个词还没到主句的谓语。
-- 一串关系从句套一串关系从句。原书的病例：
+- 一串关系从句套一串关系从句。原书的病例，第一句是核心主张，后面四个从句全挂在 genetic engineering 上：
 
   > No scientific advance is more exciting than genetic engineering, which is a new way of manipulating the elemental structural units of life itself, which are the genes and chromosomes that tell our cells how to reproduce to become the parts that constitute our bodies.
 
@@ -167,7 +171,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ### 改法
 
-先治开头，再治散漫。
+先治开头，再治散漫。我们可以按这个顺序逐句过。
 
 **治开头（两条经验法则）**：
 
@@ -178,10 +182,16 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 1. **删**：把 who / that / which + be 压缩成短语。
 2. **独立成句**：把从属分句改成完整句子。
-3. **改成修饰语**，这是原书最独特的三个术语——
-   - **resumptive modifier**（复指修饰语）：在关键名词后停顿，重复该名词，再用 that 从句续行：`...what I am about to do in this sentence, a sentence that I could have ended at that comma but extended to show you how resumptive modifiers work.`
-   - **summative modifier**（总结修饰语）：在语法完整的句段后停顿，用一个概括前文的新名词接 that 从句：`Economic changes have reduced Russian population growth to less than zero, a demographic event that will have serious social implications.`
-   - **free modifier**（自由修饰语）：评论最近一个动词的主语，常以 -ing、过去分词或形容词开头：`Leonardo da Vinci was a man of powerful intellect, driven by an insatiable curiosity and haunted by a vision of artistic perfection.`
+3. **改成修饰语**。这是原书最独特的三个术语，逐一说明——
+   - **resumptive modifier**（复指修饰语）：在关键名词后停顿，重复该名词，再用 that 从句续行：
+
+     > ...what I am about to do in this sentence, a sentence that I could have ended at that comma but extended to show you how resumptive modifiers work.
+   - **summative modifier**（总结修饰语）：在语法完整的句段后停顿，用一个概括前文的新名词接 that 从句：
+
+     > Economic changes have reduced Russian population growth to less than zero, a demographic event that will have serious social implications.
+   - **free modifier**（自由修饰语）：评论最近一个动词的主语，常以 -ing、过去分词或形容词开头：
+
+     > Leonardo da Vinci was a man of powerful intellect, driven by an insatiable curiosity and haunted by a vision of artistic perfection.
 4. **并列（coordinate）**：结构对仗的并列是句形优雅的根基。并列时遵守短到长的次序：短元素在前，长元素在后。原书例：把 `between those subjective values that reflect our deepest ethical choices and objective research` 倒过来——`between objective research and those subjective values that reflect our deepest ethical choices`——句子立刻收得住尾。
 
 ### 长句何时可以长
@@ -201,7 +211,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 严格的简洁会干瘪。优雅的第一来源是句内各部分在结构、声音、意义上的对称（balance and symmetry），最常见的手法是对仗式并列——原书引 Walter Lippmann 作全文范本：`...to make it impracticable for the administration to be arbitrary and for the opposition to be revolutionary and irreconcilable.`
 
-第二来源是收尾的方式。原书列了五种把重音做足的手段：
+第二来源是收尾的方式。原书列了五种把重音做足的手段，而论文写作里最用得上的，是第一种与第五种：
 
 1. 用重词收尾，最好是成对的重词（名词、名词化在句尾反而合适）。
 2. 用 of + 重词收尾（of the old 式的轻介词前置反而托起重音）。
@@ -211,11 +221,11 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ### 症状与改法
 
-论文写作里这一节的实际用法是克制的：段落的结论句、引言的收束句、讨论的结尾句，值得花时间对到这五条上；正文其他部分做到清晰、简洁、衔接即可。原书自己也说，最优雅的优雅是 disarming simplicity——解除武装式的朴素。
+论文写作里这一节的实际用法是克制的：段落的结论句、引言的收束句、讨论的结尾句，值得花时间对到这五条上；正文其他部分做到清晰、简洁、衔接即可。我们不必把 chiasmus 和 suspension 铺满全文。原书自己也说，最优雅的优雅是 disarming simplicity——解除武装式的朴素。
 
 ## 修改论文时的检查动作
 
-逐段过以下八项，顺序即优先级：
+逐段过以下八项，顺序即优先级。我们可以把它打印出来贴在手边，改完一轮就勾一遍。
 
 1. **画线查主语**：每句画开头 $7$–$8$ 个词。画线处应是具体角色或熟悉话题；若全是抽象名词或迟迟不见谓语，回到"角色作主语、动作作动词"三步改写。
 2. **数名词化**：-tion / -ment / -ance 类名词连续出现两个以上时，检查是否属于可保留的四种情况；不属于则变回动词。
@@ -230,7 +240,7 @@ Williams 全书的第一原则只有两条：把句子的主语留给主要角�
 
 ## 依据说明
 
-- 各节原则、诊断步骤与例句框架均直接取自《Style: Lessons in Clarity and Grace》第 11 版（Williams & Bizup, Pearson, 2013）正文全文（Ten Principles for Writing Clearly、Lesson 3–6、8–9、11 及总结构图），属一手依据。
-- 第 11 版中 Concision 为 Lesson 9、Shape 为 Lesson 8、Elegance 为 Lesson 11；早期版本（如第 4 版 Ten Lessons）编号不同（Concision 为 Lesson 5、Shape 为 Lesson 8、Elegance 为 Lesson 10），引用章节号时需注意版本差异。
-- "elegant variation" 一词的出处是 Fowler（1926）而非 Williams；Williams 在书中的立场是"不要为变化而变换话题词，但可用代词微调刻板的重复"，本手册第六项检查按此立场表述。
-- Elegance 一节（平衡、climax、chiasmus、suspension）在原书中有大量文学性示例；"论文里用得上的部分"这一适用范围的裁剪是本手册的判断，非原书内容。
+- 各节原则、诊断步骤与例句框架均直接取自《Style: Lessons in Clarity and Grace》第 11 版（Williams & Bizup, Pearson, 2013）正文全文。一手依据，含 Ten Principles for Writing Clearly、Lesson 3–6、8–9、11 及总结构图。
+- 第 11 版中 Concision 为 Lesson 9、Shape 为 Lesson 8、Elegance 为 Lesson 11。早期版本（如第 4 版 Ten Lessons）编号不同：Concision 为 Lesson 5、Shape 为 Lesson 8、Elegance 为 Lesson 10。引用章节号时需注意版本差异。
+- "elegant variation" 一词的出处是 Fowler（1926）而非 Williams。Williams 在书中的立场是"不要为变化而变换话题词，但可用代词微调刻板的重复"，本手册第六项检查按此立场表述。
+- Elegance 一节（平衡、climax、chiasmus、suspension）在原书中有大量文学性示例。"论文里用得上的部分"这一适用范围的裁剪是本手册的判断，非原书内容。
